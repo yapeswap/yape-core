@@ -4,5 +4,5 @@ pragma abicoder v2;
 
 import { UniswapV2Pair } from "../uni-v2/UniswapV2Pair.sol";
 
-contract YapeswapPair is UniswapV2Pair {
+contract YapePair is UniswapV2Pair {
 }

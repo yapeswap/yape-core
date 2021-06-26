@@ -13,6 +13,14 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "YapeFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.YapeFactory__factory>;
+    getContractFactory(
+      name: "YapePair",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.YapePair__factory>;
+    getContractFactory(
       name: "YapeswapFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YapeswapFactory__factory>;

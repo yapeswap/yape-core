@@ -14,10 +14,10 @@ interface PairFixture extends FactoryFixture {
 
 
 export async function factoryFixture(signer: Signer): Promise<FactoryFixture> {
-  const YapeswapFactory = (
-    await ethers.getContractFactory("YapeswapFactory")
+  const YapeFactory = (
+    await ethers.getContractFactory("YapeFactory")
   ).connect(signer);
-  const factory = await YapeswapFactory.deploy(await signer.getAddress());
+  const factory = await YapeFactory.deploy(await signer.getAddress());
   return { factory };
 }
 
@@ -31,7 +31,7 @@ export async function pairFixture(signer: Signer): Promise<PairFixture> {
     tokenA.address,
     tokenB.address
   );
-  const pair = await ethers.getContractAt("YapeswapPair", pairAddress, signer);
+  const pair = await ethers.getContractAt("YapePair", pairAddress, signer);
   const token0Address = await pair.token0();
   const token0 = tokenA.address === token0Address ? tokenA : tokenB;
   const token1 = tokenA.address === token0Address ? tokenB : tokenA;

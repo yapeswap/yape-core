@@ -16,7 +16,7 @@ chai.use(waffle.solidity);
 const { AddressZero } = constants;
 const provider = waffle.provider;
 
-describe("Uniswap compatibility: YapeswapPair", () => {
+describe("Uniswap compatibility: YapePair", () => {
   let wallet: Signer, other: Signer;
   let walletAddress: string;
   let otherAddress: string;

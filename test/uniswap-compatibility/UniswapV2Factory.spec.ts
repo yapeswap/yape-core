@@ -12,7 +12,7 @@ const { AddressZero } = constants;
 
 const provider = ethers.provider;
 
-describe("Uniswap compatibility: YapeswapFactory", async () => {
+describe("Uniswap compatibility: YapeFactory", async () => {
   let wallet: Signer, other: Signer;
   let walletAddress: string;
   let otherAddress: string;
@@ -44,11 +44,11 @@ describe("Uniswap compatibility: YapeswapFactory", async () => {
   });
 
   async function createPair(tokens: [string, string]) {
-    const YapeswapPair = await ethers.getContractFactory("YapeswapPair");
+    const YapePair = await ethers.getContractFactory("YapePair");
     const create2Address = getCreate2Address(
       factory.address,
       tokens,
-      `${YapeswapPair.bytecode}`
+      `${YapePair.bytecode}`
     );
     await expect(factory.createPair(...tokens))
       .to.emit(factory, "PairCreated")
@@ -70,7 +70,7 @@ describe("Uniswap compatibility: YapeswapFactory", async () => {
     expect(await factory.allPairsLength()).to.eq(1);
     const pair = new Contract(
       create2Address,
-      YapeswapPair.interface,
+      YapePair.interface,
       provider
     );
     expect(await pair.factory()).to.eq(factory.address);
