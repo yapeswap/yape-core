@@ -1,11 +1,10 @@
-# Uniswap V2
+# Yapeswap
 
-[![Actions Status](https://github.com/Uniswap/uniswap-v2-core/workflows/CI/badge.svg)](https://github.com/Uniswap/uniswap-v2-core/actions)
-[![Version](https://img.shields.io/npm/v/@uniswap/v2-core)](https://www.npmjs.com/package/@uniswap/v2-core)
+Yield for the Reserved!
 
-In-depth documentation on Uniswap V2 is available at [uniswap.org](https://uniswap.org/docs).
+## Credits
 
-The built contract artifacts can be browsed via [unpkg.com](https://unpkg.com/browse/@uniswap/v2-core@latest/).
+This project is built on a fork of Uniswap V2, the most loved open-source version of AMM.
 
 # Local Development
 

@@ -1,37 +1,51 @@
 name: CI
 
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
 on:
   push:
-    branches:
-      - master
+    branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
   test:
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node: ['10.x', '12.x']
-        os: [ubuntu-latest]
-
-    runs-on: ${{ matrix.os }}
+        node-version: [12.x, 14.x, 15.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
-
-      - run: npm install -g yarn
-
-      - id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-yarn-
-
+          node-version: ${{ matrix.node-version }}
       - run: yarn
-      - run: yarn lint
+      - run: yarn build
       - run: yarn test
+  coverage:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - run: yarn build
+      - run: yarn hardhat coverage
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+      - uses: codecov/codecov-action@v1

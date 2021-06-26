@@ -1,9 +1,10 @@
-pragma solidity =0.5.16;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.0;
 
 import './interfaces/IUniswapV2Factory.sol';
 import './UniswapV2Pair.sol';
 
-contract UniswapV2Factory is IUniswapV2Factory {
+contract UniswapV2Factory {
     address public feeTo;
     address public feeToSetter;
 
@@ -12,7 +13,7 @@ contract UniswapV2Factory is IUniswapV2Factory {
 
     event PairCreated(address indexed token0, address indexed token1, address pair, uint);
 
-    constructor(address _feeToSetter) public {
+    constructor(address _feeToSetter) {
         feeToSetter = _feeToSetter;
     }
 
@@ -20,7 +21,7 @@ contract UniswapV2Factory is IUniswapV2Factory {
         return allPairs.length;
     }
 
-    function createPair(address tokenA, address tokenB) external returns (address pair) {
+    function createPair(address tokenA, address tokenB) external virtual returns (address pair) {
         require(tokenA != tokenB, 'UniswapV2: IDENTICAL_ADDRESSES');
         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
         require(token0 != address(0), 'UniswapV2: ZERO_ADDRESS');
