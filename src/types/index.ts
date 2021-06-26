@@ -3,8 +3,6 @@
 /* eslint-disable */
 export type { YapeFactory } from "./YapeFactory";
 export type { YapePair } from "./YapePair";
-export type { YapeswapFactory } from "./YapeswapFactory";
-export type { YapeswapPair } from "./YapeswapPair";
 export type { IERC20 } from "./IERC20";
 export type { IUniswapV2Callee } from "./IUniswapV2Callee";
 export type { IUniswapV2ERC20 } from "./IUniswapV2ERC20";
@@ -17,8 +15,6 @@ export type { ERC20 } from "./ERC20";
 
 export { YapeFactory__factory } from "./factories/YapeFactory__factory";
 export { YapePair__factory } from "./factories/YapePair__factory";
-export { YapeswapFactory__factory } from "./factories/YapeswapFactory__factory";
-export { YapeswapPair__factory } from "./factories/YapeswapPair__factory";
 export { IERC20__factory } from "./factories/IERC20__factory";
 export { IUniswapV2Callee__factory } from "./factories/IUniswapV2Callee__factory";
 export { IUniswapV2ERC20__factory } from "./factories/IUniswapV2ERC20__factory";

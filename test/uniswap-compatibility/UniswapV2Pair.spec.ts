@@ -240,7 +240,7 @@ describe("Uniswap compatibility: YapePair", () => {
     await mineBlock((await provider.getBlock("latest")).timestamp + 1);
     const tx = await pair.swap(expectedOutputAmount, 0, walletAddress, "0x");
     const receipt = await tx.wait();
-    expect(receipt.gasUsed).to.eq(75877);
+    expect(receipt.gasUsed).to.eq(75960);
   });
 
   it("burn", async () => {

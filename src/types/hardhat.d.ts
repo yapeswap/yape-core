@@ -21,14 +21,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YapePair__factory>;
     getContractFactory(
-      name: "YapeswapFactory",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.YapeswapFactory__factory>;
-    getContractFactory(
-      name: "YapeswapPair",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.YapeswapPair__factory>;
-    getContractFactory(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;

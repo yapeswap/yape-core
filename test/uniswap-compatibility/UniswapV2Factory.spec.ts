@@ -89,7 +89,7 @@ describe("Uniswap compatibility: YapeFactory", async () => {
   it("createPair:gas", async () => {
     const tx = await factory.createPair(...TEST_ADDRESSES);
     const receipt = await tx.wait();
-    expect(receipt.gasUsed).to.eq(2624998);
+    expect(receipt.gasUsed).to.eq(2337077);
   });
 
   it("setFeeTo", async () => {
