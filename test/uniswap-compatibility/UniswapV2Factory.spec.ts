@@ -1,10 +1,11 @@
 import chai, { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract, constants, BigNumber, Signer } from "ethers";
+import { Contract, constants, BigNumber } from "ethers";
 import { solidity } from "ethereum-waffle";
 
 import { expandTo18Decimals, getCreate2Address } from "../shared/utilities";
 import { factoryFixture } from "../shared/fixtures";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 chai.use(solidity);
 
@@ -13,17 +14,13 @@ const { AddressZero } = constants;
 const provider = ethers.provider;
 
 describe("Uniswap compatibility: YapeFactory", async () => {
-  let wallet: Signer, other: Signer;
-  let walletAddress: string;
-  let otherAddress: string;
+  let wallet: SignerWithAddress, other: SignerWithAddress;
   let factory: Contract;
   let undarkener: Contract;
   let hRatioHash: Contract;
   let TEST_ADDRESSES: [string, string];
   beforeEach(async () => {
     [wallet, other] = await ethers.getSigners();
-    walletAddress = await wallet.getAddress();
-    otherAddress = await other.getAddress();
     const fixture = await factoryFixture(wallet);
     const ERC20Tester = await ethers.getContractFactory("ERC20");
     const tokenA = await ERC20Tester.deploy(expandTo18Decimals(10000));
@@ -39,7 +36,7 @@ describe("Uniswap compatibility: YapeFactory", async () => {
 
   it("feeTo, feeToSetter, allPairsLength", async () => {
     expect(await factory.feeTo()).to.eq(AddressZero);
-    expect(await factory.feeToSetter()).to.eq(walletAddress);
+    expect(await factory.feeToSetter()).to.eq(wallet.address);
     expect(await factory.allPairsLength()).to.eq(0);
   });
 
@@ -89,24 +86,24 @@ describe("Uniswap compatibility: YapeFactory", async () => {
   it("createPair:gas", async () => {
     const tx = await factory.createPair(...TEST_ADDRESSES);
     const receipt = await tx.wait();
-    expect(receipt.gasUsed).to.eq(2337077);
+    expect(receipt.gasUsed).to.eq(4625723);
   });
 
   it("setFeeTo", async () => {
     await expect(
-      factory.connect(other).setFeeTo(otherAddress)
+      factory.connect(other).setFeeTo(other.address)
     ).to.be.revertedWith("UniswapV2: FORBIDDEN");
-    await factory.setFeeTo(walletAddress);
-    expect(await factory.feeTo()).to.eq(walletAddress);
+    await factory.setFeeTo(wallet.address);
+    expect(await factory.feeTo()).to.eq(wallet.address);
   });
 
   it("setFeeToSetter", async () => {
     await expect(
-      factory.connect(other).setFeeToSetter(otherAddress)
+      factory.connect(other).setFeeToSetter(other.address)
     ).to.be.revertedWith("UniswapV2: FORBIDDEN");
-    await factory.setFeeToSetter(otherAddress);
-    expect(await factory.feeToSetter()).to.eq(otherAddress);
-    await expect(factory.setFeeToSetter(walletAddress)).to.be.revertedWith(
+    await factory.setFeeToSetter(other.address);
+    expect(await factory.feeToSetter()).to.eq(other.address);
+    await expect(factory.setFeeToSetter(wallet.address)).to.be.revertedWith(
       "UniswapV2: FORBIDDEN"
     );
   });

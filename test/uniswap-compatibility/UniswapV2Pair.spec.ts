@@ -1,6 +1,6 @@
 import { ethers, waffle } from "hardhat";
 import chai, { expect } from "chai";
-import { Contract, constants, BigNumber, Signer } from "ethers";
+import { Contract, constants, BigNumber } from "ethers";
 
 import {
   expandTo18Decimals,
@@ -8,6 +8,7 @@ import {
   encodePrice,
 } from "../shared/utilities";
 import { pairFixture } from "../shared/fixtures";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 const MINIMUM_LIQUIDITY = BigNumber.from(10).pow(3);
 
@@ -17,17 +18,13 @@ const { AddressZero } = constants;
 const provider = waffle.provider;
 
 describe("Uniswap compatibility: YapePair", () => {
-  let wallet: Signer, other: Signer;
-  let walletAddress: string;
-  let otherAddress: string;
+  let wallet: SignerWithAddress, other: SignerWithAddress;
   let factory: Contract;
   let token0: Contract;
   let token1: Contract;
   let pair: Contract;
   beforeEach(async () => {
     [wallet, other] = await ethers.getSigners();
-    walletAddress = await wallet.getAddress();
-    otherAddress = await other.getAddress();
     const fixture = await pairFixture(wallet);
     factory = fixture.factory;
     token0 = fixture.token0;
@@ -42,22 +39,22 @@ describe("Uniswap compatibility: YapePair", () => {
     await token1.transfer(pair.address, token1Amount);
 
     const expectedLiquidity = expandTo18Decimals(2);
-    await expect(pair.mint(walletAddress))
+    await expect(pair.mint(wallet.address))
       .to.emit(pair, "Transfer")
       .withArgs(AddressZero, AddressZero, MINIMUM_LIQUIDITY)
       .to.emit(pair, "Transfer")
       .withArgs(
         AddressZero,
-        walletAddress,
+        wallet.address,
         expectedLiquidity.sub(MINIMUM_LIQUIDITY)
       )
       .to.emit(pair, "Sync")
       .withArgs(token0Amount, token1Amount)
       .to.emit(pair, "Mint")
-      .withArgs(walletAddress, token0Amount, token1Amount);
+      .withArgs(wallet.address, token0Amount, token1Amount);
 
     expect(await pair.totalSupply()).to.eq(expectedLiquidity);
-    expect(await pair.balanceOf(walletAddress)).to.eq(
+    expect(await pair.balanceOf(wallet.address)).to.eq(
       expectedLiquidity.sub(MINIMUM_LIQUIDITY)
     );
     expect(await token0.balanceOf(pair.address)).to.eq(token0Amount);
@@ -73,7 +70,7 @@ describe("Uniswap compatibility: YapePair", () => {
   ) {
     await token0.transfer(pair.address, token0Amount);
     await token1.transfer(pair.address, token1Amount);
-    await pair.mint(walletAddress);
+    await pair.mint(wallet.address);
   }
 
   const swapTestCases: BigNumber[][] = [
@@ -102,9 +99,9 @@ describe("Uniswap compatibility: YapePair", () => {
       await addLiquidity(token0Amount, token1Amount);
       await token0.transfer(pair.address, swapAmount);
       await expect(
-        pair.swap(0, expectedOutputAmount.add(1), walletAddress, "0x")
+        pair.swap(0, expectedOutputAmount.add(1), wallet.address, "0x")
       ).to.be.revertedWith("UniswapV2: K");
-      await pair.swap(0, BigNumber.from("1"), walletAddress, "0x");
+      await pair.swap(0, BigNumber.from("1"), wallet.address, "0x");
     });
   });
 
@@ -129,9 +126,9 @@ describe("Uniswap compatibility: YapePair", () => {
       await addLiquidity(token0Amount, token1Amount);
       await token0.transfer(pair.address, inputAmount);
       await expect(
-        pair.swap(outputAmount.add(1), 0, walletAddress, "0x")
+        pair.swap(outputAmount.add(1), 0, wallet.address, "0x")
       ).to.be.revertedWith("UniswapV2: K");
-      await pair.swap(outputAmount, 0, walletAddress, "0x");
+      await pair.swap(outputAmount, 0, wallet.address, "0x");
     });
   });
 
@@ -143,9 +140,9 @@ describe("Uniswap compatibility: YapePair", () => {
     const swapAmount = expandTo18Decimals(1);
     const expectedOutputAmount = BigNumber.from("1662497915624478906");
     await token0.transfer(pair.address, swapAmount);
-    await expect(pair.swap(0, expectedOutputAmount, walletAddress, "0x"))
+    await expect(pair.swap(0, expectedOutputAmount, wallet.address, "0x"))
       .to.emit(token1, "Transfer")
-      .withArgs(pair.address, walletAddress, expectedOutputAmount)
+      .withArgs(pair.address, wallet.address, expectedOutputAmount)
       .to.emit(pair, "Sync")
       .withArgs(
         token0Amount.add(swapAmount),
@@ -153,12 +150,12 @@ describe("Uniswap compatibility: YapePair", () => {
       )
       .to.emit(pair, "Swap")
       .withArgs(
-        walletAddress,
+        wallet.address,
         swapAmount,
         0,
         0,
         expectedOutputAmount,
-        walletAddress
+        wallet.address
       );
 
     const reserves = await pair.getReserves();
@@ -172,10 +169,10 @@ describe("Uniswap compatibility: YapePair", () => {
     );
     const totalSupplyToken0 = await token0.totalSupply();
     const totalSupplyToken1 = await token1.totalSupply();
-    expect(await token0.balanceOf(walletAddress)).to.eq(
+    expect(await token0.balanceOf(wallet.address)).to.eq(
       totalSupplyToken0.sub(token0Amount).sub(swapAmount)
     );
-    expect(await token1.balanceOf(walletAddress)).to.eq(
+    expect(await token1.balanceOf(wallet.address)).to.eq(
       totalSupplyToken1.sub(token1Amount).add(expectedOutputAmount)
     );
   });
@@ -188,9 +185,9 @@ describe("Uniswap compatibility: YapePair", () => {
     const swapAmount = expandTo18Decimals(1);
     const expectedOutputAmount = BigNumber.from("453305446940074565");
     await token1.transfer(pair.address, swapAmount);
-    await expect(pair.swap(expectedOutputAmount, 0, walletAddress, "0x"))
+    await expect(pair.swap(expectedOutputAmount, 0, wallet.address, "0x"))
       .to.emit(token0, "Transfer")
-      .withArgs(pair.address, walletAddress, expectedOutputAmount)
+      .withArgs(pair.address, wallet.address, expectedOutputAmount)
       .to.emit(pair, "Sync")
       .withArgs(
         token0Amount.sub(expectedOutputAmount),
@@ -198,12 +195,12 @@ describe("Uniswap compatibility: YapePair", () => {
       )
       .to.emit(pair, "Swap")
       .withArgs(
-        walletAddress,
+        wallet.address,
         0,
         swapAmount,
         expectedOutputAmount,
         0,
-        walletAddress
+        wallet.address
       );
 
     const reserves = await pair.getReserves();
@@ -217,10 +214,10 @@ describe("Uniswap compatibility: YapePair", () => {
     );
     const totalSupplyToken0 = await token0.totalSupply();
     const totalSupplyToken1 = await token1.totalSupply();
-    expect(await token0.balanceOf(walletAddress)).to.eq(
+    expect(await token0.balanceOf(wallet.address)).to.eq(
       totalSupplyToken0.sub(token0Amount).add(expectedOutputAmount)
     );
-    expect(await token1.balanceOf(walletAddress)).to.eq(
+    expect(await token1.balanceOf(wallet.address)).to.eq(
       totalSupplyToken1.sub(token1Amount).sub(swapAmount)
     );
   });
@@ -238,9 +235,9 @@ describe("Uniswap compatibility: YapePair", () => {
     const expectedOutputAmount = BigNumber.from("453305446940074565");
     await token1.transfer(pair.address, swapAmount);
     await mineBlock((await provider.getBlock("latest")).timestamp + 1);
-    const tx = await pair.swap(expectedOutputAmount, 0, walletAddress, "0x");
+    const tx = await pair.swap(expectedOutputAmount, 0, wallet.address, "0x");
     const receipt = await tx.wait();
-    expect(receipt.gasUsed).to.eq(75960);
+    expect(receipt.gasUsed).to.eq(87641);
   });
 
   it("burn", async () => {
@@ -250,7 +247,7 @@ describe("Uniswap compatibility: YapePair", () => {
 
     const expectedLiquidity = expandTo18Decimals(3);
     await pair.transfer(pair.address, expectedLiquidity.sub(MINIMUM_LIQUIDITY));
-    await expect(pair.burn(walletAddress))
+    await expect(pair.burn(wallet.address))
       .to.emit(pair, "Transfer")
       .withArgs(
         pair.address,
@@ -258,29 +255,29 @@ describe("Uniswap compatibility: YapePair", () => {
         expectedLiquidity.sub(MINIMUM_LIQUIDITY)
       )
       .to.emit(token0, "Transfer")
-      .withArgs(pair.address, walletAddress, token0Amount.sub(1000))
+      .withArgs(pair.address, wallet.address, token0Amount.sub(1000))
       .to.emit(token1, "Transfer")
-      .withArgs(pair.address, walletAddress, token1Amount.sub(1000))
+      .withArgs(pair.address, wallet.address, token1Amount.sub(1000))
       .to.emit(pair, "Sync")
       .withArgs(1000, 1000)
       .to.emit(pair, "Burn")
       .withArgs(
-        walletAddress,
+        wallet.address,
         token0Amount.sub(1000),
         token1Amount.sub(1000),
-        walletAddress
+        wallet.address
       );
 
-    expect(await pair.balanceOf(walletAddress)).to.eq(0);
+    expect(await pair.balanceOf(wallet.address)).to.eq(0);
     expect(await pair.totalSupply()).to.eq(MINIMUM_LIQUIDITY);
     expect(await token0.balanceOf(pair.address)).to.eq(1000);
     expect(await token1.balanceOf(pair.address)).to.eq(1000);
     const totalSupplyToken0 = await token0.totalSupply();
     const totalSupplyToken1 = await token1.totalSupply();
-    expect(await token0.balanceOf(walletAddress)).to.eq(
+    expect(await token0.balanceOf(wallet.address)).to.eq(
       totalSupplyToken0.sub(1000)
     );
-    expect(await token1.balanceOf(walletAddress)).to.eq(
+    expect(await token1.balanceOf(wallet.address)).to.eq(
       totalSupplyToken1.sub(1000)
     );
   });
@@ -306,7 +303,7 @@ describe("Uniswap compatibility: YapePair", () => {
     await token0.transfer(pair.address, swapAmount);
     await mineBlock(blockTimestamp + 10);
     // swap to a new price eagerly instead of syncing
-    await pair.swap(0, expandTo18Decimals(1), walletAddress, "0x"); // make the price nice
+    await pair.swap(0, expandTo18Decimals(1), wallet.address, "0x"); // make the price nice
 
     const updatedTimestamp2 = (await pair.getReserves())[2];
     expect(await pair.price0CumulativeLast()).to.eq(
@@ -340,16 +337,16 @@ describe("Uniswap compatibility: YapePair", () => {
     const swapAmount = expandTo18Decimals(1);
     const expectedOutputAmount = BigNumber.from("996006981039903216");
     await token1.transfer(pair.address, swapAmount);
-    await pair.swap(expectedOutputAmount, 0, walletAddress, "0x");
+    await pair.swap(expectedOutputAmount, 0, wallet.address, "0x");
 
     const expectedLiquidity = expandTo18Decimals(1000);
     await pair.transfer(pair.address, expectedLiquidity.sub(MINIMUM_LIQUIDITY));
-    await pair.burn(walletAddress);
+    await pair.burn(wallet.address);
     expect(await pair.totalSupply()).to.eq(MINIMUM_LIQUIDITY);
   });
 
   it("feeTo:on", async () => {
-    await factory.setFeeTo(otherAddress);
+    await factory.setFeeTo(other.address);
 
     const token0Amount = expandTo18Decimals(1000);
     const token1Amount = expandTo18Decimals(1000);
@@ -358,15 +355,15 @@ describe("Uniswap compatibility: YapePair", () => {
     const swapAmount = expandTo18Decimals(1);
     const expectedOutputAmount = BigNumber.from("996006981039903216");
     await token1.transfer(pair.address, swapAmount);
-    await pair.swap(expectedOutputAmount, 0, walletAddress, "0x");
+    await pair.swap(expectedOutputAmount, 0, wallet.address, "0x");
 
     const expectedLiquidity = expandTo18Decimals(1000);
     await pair.transfer(pair.address, expectedLiquidity.sub(MINIMUM_LIQUIDITY));
-    await pair.burn(walletAddress);
+    await pair.burn(wallet.address);
     expect(await pair.totalSupply()).to.eq(
       MINIMUM_LIQUIDITY.add("249750499251388")
     );
-    expect(await pair.balanceOf(otherAddress)).to.eq("249750499251388");
+    expect(await pair.balanceOf(other.address)).to.eq("249750499251388");
 
     // using 1000 here instead of the symbolic MINIMUM_LIQUIDITY because the amounts only happen to be equal...
     // ...because the initial liquidity amounts were equal

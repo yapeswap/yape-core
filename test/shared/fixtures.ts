@@ -1,6 +1,7 @@
 import { ethers } from "hardhat";
-import { Contract, Signer } from "ethers";
+import { Contract } from "ethers";
 import { expandTo18Decimals } from "./utilities";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 interface FactoryFixture {
   factory: Contract;
@@ -13,15 +14,16 @@ interface PairFixture extends FactoryFixture {
 }
 
 
-export async function factoryFixture(signer: Signer): Promise<FactoryFixture> {
+export async function factoryFixture(signer: SignerWithAddress): Promise<FactoryFixture> {
   const YapeFactory = (
     await ethers.getContractFactory("YapeFactory")
   ).connect(signer);
-  const factory = await YapeFactory.deploy(await signer.getAddress());
+  const factory = await YapeFactory.deploy(signer.address, signer.address);
   return { factory };
 }
 
-export async function pairFixture(signer: Signer): Promise<PairFixture> {
+
+export async function pairFixture(signer: SignerWithAddress): Promise<PairFixture> {
   const ERC20 = await ethers.getContractFactory("ERC20");
   const fixture = await factoryFixture(signer);
   const tokenA = await ERC20.deploy(expandTo18Decimals(10000));
