@@ -149,7 +149,7 @@ contract YapePair is UniswapV2Pair, YapeWrapper {
         keepBalance(token)
     {
         uint256 yield = totalVaultBalance(token, address(this)).sub(
-            _balanceOf(token)
+            farming[token]
         );
         uint256 withdrawn = _withdraw(
             token,
