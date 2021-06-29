@@ -60,7 +60,10 @@ contract YapeFeeManager is Governed, AccessControlEnumerable {
             address dstToken,
             address dstReceiver
         ) = swapData.decode();
-        require(IERC20(srcToken).balanceOf(address(this)) >= amount, "YapeFeeManager: NOT ENOUGH BALANCE");
+        require(
+            IERC20(srcToken).balanceOf(address(this)) >= amount,
+            "YapeFeeManager: NOT ENOUGH BALANCE"
+        );
         require(srcToken != yape, "YapeFeeManager: SPENDING YAPE");
         require(dstToken == yape, "YapeFeeManager: SHOULD BUY YAPE");
         require(dstReceiver == address(this), "YapeFeeManager: INVALID DST");
@@ -77,10 +80,7 @@ contract YapeFeeManager is Governed, AccessControlEnumerable {
         );
     }
 
-    function distribute(uint256 amount)
-        public
-        onlyRole(EXECUTOR_ROLE)
-    {
+    function distribute(uint256 amount) public onlyRole(EXECUTOR_ROLE) {
         IDividendPool(dividendPool).distribute(yape, amount);
     }
 }

@@ -48,6 +48,13 @@ contract YapePair is UniswapV2Pair, YapeWrapper {
         require(_balanceOf(token) == prevBal, "Yapeswap: BALANCE CHANGED");
     }
 
+    function mint(address to) public override lock returns (uint256 liquidity) {
+        super.mint(to);
+
+        _rebalance(token0, 0, false);
+        _rebalance(token1, 0, false);
+    }
+
     function updateRegistry() public {
         _registry = IYapeFactory(factory).registry();
     }
