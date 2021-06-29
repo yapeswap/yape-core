@@ -18,7 +18,11 @@ export async function factoryFixture(signer: SignerWithAddress): Promise<Factory
   const YapeFactory = (
     await ethers.getContractFactory("YapeFactory")
   ).connect(signer);
-  const factory = await YapeFactory.deploy(signer.address, signer.address);
+  const YapePairCode = (
+    await ethers.getContractFactory("YapePairCode")
+  ).connect(signer);
+  const pairCode = await YapePairCode.deploy()
+  const factory = await YapeFactory.deploy(signer.address, signer.address, pairCode.address);
   return { factory };
 }
 
