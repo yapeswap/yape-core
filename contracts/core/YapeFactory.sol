@@ -12,9 +12,11 @@ contract YapeFactory is UniswapV2Factory {
     address public operator;
     address public pairCode;
 
-    constructor(address feeToSetter_, address registry_, address pairCode_)
-        UniswapV2Factory(feeToSetter_)
-    {
+    constructor(
+        address feeToSetter_,
+        address registry_,
+        address pairCode_
+    ) UniswapV2Factory(feeToSetter_) {
         registry = registry_;
         pairCode = pairCode_;
     }
