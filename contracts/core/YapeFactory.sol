@@ -15,15 +15,22 @@ contract YapeFactory is UniswapV2Factory {
     constructor(
         address feeToSetter_,
         address registry_,
+        address operator_,
         address pairCode_
     ) UniswapV2Factory(feeToSetter_) {
         registry = registry_;
+        operator = operator_;
         pairCode = pairCode_;
     }
 
     function setRegistry(address registry_) external {
         require(msg.sender == feeToSetter, "UniswapV2: FORBIDDEN");
         registry = registry_;
+    }
+
+    function setOperator(address operator_) external {
+        require(msg.sender == feeToSetter, "UniswapV2: FORBIDDEN");
+        operator = operator_;
     }
 
     function createPair(address tokenA, address tokenB)
