@@ -154,9 +154,15 @@ contract YapePair is UniswapV2Pair, YapeWrapper {
         internal
         keepBalance(token)
     {
-        uint256 yield = totalVaultBalance(token, address(this)).sub(
-            farming[token]
-        );
+        uint256 yearnBal = totalVaultBalance(token, address(this));
+        uint256 farmingAmount = farming[token];
+        uint256 yield;
+        if (yearnBal > farmingAmount) {
+            yield = yearnBal - farmingAmount;
+        } else {
+            // rare case
+            yield = 0;
+        }
         uint256 withdrawn = _withdraw(
             token,
             address(this),
@@ -164,11 +170,18 @@ contract YapePair is UniswapV2Pair, YapeWrapper {
             amount.add(yield),
             true
         );
-        uint256 netYield = withdrawn.sub(amount);
-        farming[token] = farming[token].sub(amount);
+        uint256 netYield;
+        if (withdrawn > amount) {
+            netYield = withdrawn - amount;
+        } else {
+            netYield = 0;
+        }
+        farming[token] = farmingAmount.sub(withdrawn - netYield);
         // Send fee
         address feeTo = IUniswapV2Factory(factory).feeTo();
-        IERC20(token).safeTransfer(feeTo, netYield);
-        emit YearnWithdraw(token, amount, netYield);
+        if (netYield > 0) {
+            IERC20(token).safeTransfer(feeTo, netYield);
+        }
+        emit YearnWithdraw(token, withdrawn, netYield);
     }
 }

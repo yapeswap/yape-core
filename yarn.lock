@@ -876,16 +876,6 @@
   resolved "https://registry.yarnpkg.com/@uniswap/v2-core/-/v2-core-1.0.1.tgz#af8f508bf183204779938969e2e54043e147d425"
   integrity sha512-MtybtkUPSyysqLY2U210NBDeCHX+ltHt3oADGdjqoThZaFRDKwM6k1Nb3F0A3hk5hwuQvytFWhrWHOEq6nVJ8Q==
 
-"@workhard/protocol@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@workhard/protocol/-/protocol-1.0.2.tgz#5a7b5a4759333b656d80ade1265b2ff01144895a"
-  integrity sha512-4q+HC+n71Fg5YX/PTOnn22ymHRBoWUcJfvnbeOk7motkydrfs7ounizwVGYkpqeHhSbysnjBqPD0UI3hMDVWjQ==
-  dependencies:
-    "@openzeppelin/contracts" "3.4.0-solc-0.7 "
-    "@uniswap/v2-core" "^1.0.1"
-    dotenv "^8.2.0"
-    lowdb "^1.0.0"
-
 "@workhard/protocol@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@workhard/protocol/-/protocol-1.0.3.tgz#9dcccb713590e360400b68f82cc7c70915380b2f"
