@@ -3,4 +3,5 @@
 
 yarn lint-staged
 yarn build
+yarn test
 git add src
