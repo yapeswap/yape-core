@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.0;
 
-import {IUniswapV2Pair} from "../uni-v2/interfaces/IUniswapV2Pair.sol";
+import {IUniswapV2Pair} from "../helpers/uni-v2/interfaces/IUniswapV2Pair.sol";
 
 interface IYapePair is IUniswapV2Pair {
     function updateRegistry() external;

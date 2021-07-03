@@ -2,8 +2,8 @@
 pragma solidity >=0.8.0;
 pragma abicoder v2;
 
-import {IUniswapV2Pair} from "../uni-v2/interfaces/IUniswapV2Pair.sol";
-import {UniswapV2Factory} from "../uni-v2/UniswapV2Factory.sol";
+import {IUniswapV2Pair} from "../helpers/uni-v2/interfaces/IUniswapV2Pair.sol";
+import {UniswapV2Factory} from "../helpers/uni-v2/UniswapV2Factory.sol";
 import {IYapePair} from "../interfaces/IYapePair.sol";
 import {YapePairCode} from "./YapePairCode.sol";
 

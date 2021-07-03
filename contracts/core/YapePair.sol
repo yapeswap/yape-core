@@ -6,11 +6,11 @@ import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {UniswapV2Pair} from "../uni-v2/UniswapV2Pair.sol";
-import {IUniswapV2Factory} from "../uni-v2/interfaces/IUniswapV2Factory.sol";
-import {UQ112x112} from "../uni-v2/libraries/UQ112x112.sol";
+import {UniswapV2Pair} from "../helpers/uni-v2/UniswapV2Pair.sol";
+import {IUniswapV2Factory} from "../helpers/uni-v2/interfaces/IUniswapV2Factory.sol";
+import {UQ112x112} from "../helpers/uni-v2/libraries/UQ112x112.sol";
+import {RegistryAPI} from "../helpers/yearn/BaseWrapper.sol";
 import {YapeWrapper} from "./YapeWrapper.sol";
-import {RegistryAPI} from "../yearn/BaseWrapper.sol";
 import {IYapePair} from "../interfaces/IYapePair.sol";
 import {IYapeFactory} from "../interfaces/IYapeFactory.sol";
 

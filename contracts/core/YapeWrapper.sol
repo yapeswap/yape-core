@@ -6,8 +6,8 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import {VaultAPI} from "../yearn/BaseStrategy.sol";
-import {RegistryAPI} from "../yearn/BaseWrapper.sol";
+import {VaultAPI} from "../helpers/yearn/BaseStrategy.sol";
+import {RegistryAPI} from "../helpers/yearn/BaseWrapper.sol";
 
 /**
  * @title Functional Wrapper
