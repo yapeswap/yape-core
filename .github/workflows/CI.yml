@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  FORK_URL: ${{ secrets.FORK_URL }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
