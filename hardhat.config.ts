@@ -23,13 +23,26 @@ task('accounts', 'Prints the list of accounts', async (args, hre) => {
  */
 export default {
   solidity: {
-    version: '0.8.6',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 999999,
+    compilers: [
+      {
+        version: '0.8.6',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 999999,
+          },
+        },
       },
-    },
+      {
+        version: '0.6.6',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 999999,
+          },
+        },
+      },
+    ],
   },
   networks: {
     hardhat: {
@@ -44,6 +57,10 @@ export default {
           }
         : undefined,
     },
+    mainnet: {
+      url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
+      accounts: process.env.DEPLOYER_KEY ? [process.env.DEPLOYER_KEY] : [],
+    }
   },
   typechain: {
     outDir: 'src/types',
@@ -52,6 +69,6 @@ export default {
     externalArtifacts: ['externalArtifacts/*.json'], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
   },
   dependencyCompiler: {
-    paths: ['@workhard/utils/contracts/fee/FeeManager.sol'],
+    paths: ['@workhard/utils/contracts/fee/FeeManager.sol', '@uniswap/v2-periphery/contracts/UniswapV2Router02.sol'],
   },
 }
