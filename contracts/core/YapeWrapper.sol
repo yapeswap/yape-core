@@ -136,6 +136,9 @@ abstract contract YapeWrapper {
         bool pullFunds // If true, funds need to be pulled from `depositor` via `transferFrom`
     ) internal returns (uint256 deposited) {
         VaultAPI _bestVault = bestVault(token);
+        // in case there does not exist yearn vault
+        if (address(_bestVault) == address(0)) return 0;
+
         IERC20 _token = IERC20(token);
 
         if (pullFunds) {
