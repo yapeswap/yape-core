@@ -67,7 +67,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "4.1.0",
     "@workhard/protocol": "^1.0.3",
-    "@workhard/utils": "^0.1.3"
+    "@workhard/utils": "^0.1.4"
   },
   "lint-staged": {
     "{scripts,test,contracts}/**/*.{js,ts,sol}": [

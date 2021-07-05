@@ -90,6 +90,14 @@ contract YapePair is UniswapV2Pair, YapeWrapper {
         return (_minFarming, _maxFarming);
     }
 
+    function name() public view override returns (string memory) {
+        return "Yape LP";
+    }
+
+    function symbol() public view override returns (string memory) {
+        return "YLP";
+    }
+
     function _balanceOf(address token)
         internal
         view

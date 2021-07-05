@@ -7,9 +7,8 @@ import "./libraries/SafeMath.sol";
 contract UniswapV2ERC20 {
     using SafeMath for uint256;
 
-    string public constant name = "Uniswap V2";
-    string public constant symbol = "UNI-V2";
     uint8 public constant decimals = 18;
+
     uint256 public totalSupply;
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
@@ -37,7 +36,7 @@ contract UniswapV2ERC20 {
                 keccak256(
                     "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
                 ),
-                keccak256(bytes(name)),
+                keccak256(bytes(name())),
                 keccak256(bytes("1")),
                 chainId,
                 address(this)
@@ -132,5 +131,13 @@ contract UniswapV2ERC20 {
             "UniswapV2: INVALID_SIGNATURE"
         );
         _approve(owner, spender, value);
+    }
+
+    function name() public view virtual returns (string memory) {
+        return "Uniswap V2";
+    }
+
+    function symbol() public view virtual returns (string memory) {
+        return "UNI-V2";
     }
 }
