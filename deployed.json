@@ -1,1 +1,8 @@
-{}
+{
+  "mainnet": {
+    "YapePairCode": "0xB219dBa86B7CCA72198cF6f7C50f2C212B12bC05",
+    "YapeFactory": "0x32219a5a8ad13a141cBd689cFe0916797a58fd5a",
+    "FeeManager": "0x3af8bbd82eecece8a4e02d030a16439a932dd992",
+    "YapeRouter": "0xdCEb5da6787Af21A8d855bE6A5eC1977475f964B"
+  }
+}
