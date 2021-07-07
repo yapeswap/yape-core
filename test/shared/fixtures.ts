@@ -8,7 +8,7 @@ import { Contract } from 'ethers'
 import { expandTo18Decimals } from './utilities'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { DAO, Workhard, deployed } from '@workhard/protocol'
-import { BigNumberish, Signer } from 'ethers'
+import { BigNumberish } from 'ethers'
 import { FeeManager, FeeManager__factory } from '@workhard/utils'
 import { parseEther } from 'ethers/lib/utils'
 
@@ -42,6 +42,7 @@ export type LaunchParam = {
 
 interface FactoryFixture {
   factory: Contract
+  router: Contract
 }
 
 interface PairFixture extends FactoryFixture {
@@ -55,7 +56,9 @@ export async function factoryFixture(signer: SignerWithAddress): Promise<Factory
   const YapePairCode = (await ethers.getContractFactory('YapePairCode')).connect(signer)
   const pairCode = await YapePairCode.deploy()
   const factory = await YapeFactory.deploy(signer.address, MAINNET_YEARN_V2_REGISTRY, signer.address, pairCode.address)
-  return { factory }
+  const YapeRouter = (await ethers.getContractFactory('UniswapV2Router02')).connect(signer)
+  const router = await YapeRouter.deploy(factory.address, MAINNET_WEHT9)
+  return { factory, router }
 }
 
 export async function pairFixture(signer: SignerWithAddress): Promise<PairFixture> {

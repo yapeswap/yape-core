@@ -16,8 +16,6 @@ const provider = ethers.provider
 describe('Uniswap compatibility: YapeFactory', async () => {
   let wallet: SignerWithAddress, other: SignerWithAddress
   let factory: Contract
-  let undarkener: Contract
-  let hRatioHash: Contract
   let TEST_ADDRESSES: [string, string]
   beforeEach(async () => {
     ;[wallet, other] = await ethers.getSigners()
@@ -26,9 +24,10 @@ describe('Uniswap compatibility: YapeFactory', async () => {
     const tokenA = await ERC20Tester.deploy(expandTo18Decimals(10000))
     const tokenB = await ERC20Tester.deploy(expandTo18Decimals(10000))
     factory = fixture.factory
-    undarkener = fixture.factory
-    hRatioHash = fixture.factory
-    TEST_ADDRESSES = [tokenA.address, tokenB.address].sort() as [string, string]
+    TEST_ADDRESSES = [tokenA.address, tokenB.address].sort((a, b) => (a.toLowerCase() > b.toLowerCase() ? 1 : -1)) as [
+      string,
+      string
+    ]
   })
 
   it('feeTo, feeToSetter, allPairsLength', async () => {
