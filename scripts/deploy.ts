@@ -9,7 +9,7 @@ async function main() {
   const [signer] = await hre.ethers.getSigners()
   const YapeFactory = (await hre.ethers.getContractFactory('YapeFactory')).connect(signer)
   const YapePairCode = (await hre.ethers.getContractFactory('YapePairCode')).connect(signer)
-  const YapeRouter = (await hre.ethers.getContractFactory('UniswapV2Router02')).connect(signer)
+  const YapeRouter = (await hre.ethers.getContractFactory('YapeRouter')).connect(signer)
   const FeeManager = (await hre.ethers.getContractFactory('FeeManager')).connect(signer)
 
   const pairCode = await YapePairCode.deploy()

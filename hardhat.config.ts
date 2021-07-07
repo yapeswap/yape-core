@@ -69,6 +69,6 @@ export default {
     externalArtifacts: ['externalArtifacts/*.json'], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
   },
   dependencyCompiler: {
-    paths: ['@workhard/utils/contracts/fee/FeeManager.sol', '@uniswap/v2-periphery/contracts/UniswapV2Router02.sol'],
+    paths: ['@workhard/utils/contracts/fee/FeeManager.sol'],
   },
 }

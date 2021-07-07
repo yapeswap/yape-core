@@ -56,7 +56,7 @@ export async function factoryFixture(signer: SignerWithAddress): Promise<Factory
   const YapePairCode = (await ethers.getContractFactory('YapePairCode')).connect(signer)
   const pairCode = await YapePairCode.deploy()
   const factory = await YapeFactory.deploy(signer.address, MAINNET_YEARN_V2_REGISTRY, signer.address, pairCode.address)
-  const YapeRouter = (await ethers.getContractFactory('UniswapV2Router02')).connect(signer)
+  const YapeRouter = (await ethers.getContractFactory('YapeRouter')).connect(signer)
   const router = await YapeRouter.deploy(factory.address, MAINNET_WEHT9)
   return { factory, router }
 }
