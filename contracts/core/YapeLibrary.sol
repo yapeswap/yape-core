@@ -35,7 +35,7 @@ library YapeLibrary {
                             hex"ff",
                             factory,
                             keccak256(abi.encodePacked(token0, token1)),
-                            hex"3d36533c49d41f229b58707b3e8378166a8352e8e10fd728f50e9542474231b3" // init code hash
+                            hex"9c5b6412b8c28ce222942af3b8a56134dbbe627ed1e5cbf1879cd45c026a49ca" // init code hash
                         )
                     )
                 )

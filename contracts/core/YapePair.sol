@@ -152,7 +152,7 @@ contract YapePair is UniswapV2Pair, YapeWrapper {
             address(this),
             address(this),
             amount,
-            true
+            false
         );
         farming[token] = farming[token].add(deposited);
         emit YearnDeposit(token, amount);
