@@ -1,8 +1,8 @@
 {
   "mainnet": {
-    "YapePairCode": "0xB219dBa86B7CCA72198cF6f7C50f2C212B12bC05",
-    "YapeFactory": "0x32219a5a8ad13a141cBd689cFe0916797a58fd5a",
-    "FeeManager": "0x3af8bbd82eecece8a4e02d030a16439a932dd992",
-    "YapeRouter": "0x8984ee21515567b88907264B3135Fde05fb44c35"
+    "YapePairCode": "0x8b2b880303F65Da62ae442A658d5d4170EE470d8",
+    "YapeFactory": "0x46aDc1C052Fafd590F56C42e379d7d16622835a2",
+    "FeeManager": "0x669708a561Bc1F4fCd086775f422c66B4d1Fc2E2",
+    "YapeRouter": "0xa907768665f977c1A03B8D196AB3EC5c81F1bbcb"
   }
 }
