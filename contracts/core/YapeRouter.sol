@@ -11,6 +11,10 @@ import "../helpers/uni-v2/interfaces/IWETH.sol";
 import "../helpers/uni-v2/libraries/SafeMath.sol";
 import "../helpers/uni-v2/libraries/TransferHelper.sol";
 
+interface IYapePairViewer {
+    function farming(address token) external view returns (uint256);
+}
+
 contract YapeRouter is IUniswapV2Router02 {
     using SafeMath for uint256;
 
@@ -565,9 +569,10 @@ contract YapeRouter is IUniswapV2Router02 {
                 (uint256 reserveInput, uint256 reserveOutput) = input == token0
                     ? (reserve0, reserve1)
                     : (reserve1, reserve0);
-                amountInput = IERC20(input).balanceOf(address(pair)).sub(
-                    reserveInput
-                );
+                amountInput = IYapePairViewer(address(pair))
+                .farming(input)
+                .add(IERC20(input).balanceOf(address(pair)))
+                .sub(reserveInput);
                 amountOutput = YapeLibrary.getAmountOut(
                     amountInput,
                     reserveInput,
