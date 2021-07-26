@@ -1,6 +1,6 @@
 # Yapeswap
 
-Yield for the Reserved!
+Yearn-ed Uniswap
 
 ## Credits
 
@@ -12,12 +12,25 @@ The following assumes the use of `node@>=10`.
 
 ## Install Dependencies
 
-`yarn`
+```
+$ yarn
+```
 
 ## Compile Contracts
 
-`yarn compile`
+```
+$ yarn compile
+```
 
 ## Run Tests
 
-`yarn test`
+1. Go to alchemy api and get an API key
+2. Export the API key into the .env variable
+   ```
+   $ echo "FORK_URL=https://eth-mainnet.alchemyapi.io/v2/<key>" >> .env
+   ```
+3. Build & test
+   ```
+   $ yarn build
+   $ yarn test
+   ```
