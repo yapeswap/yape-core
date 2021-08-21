@@ -902,10 +902,10 @@
     dotenv "^8.2.0"
     lowdb "^1.0.0"
 
-"@workhard/utils@0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@workhard/utils/-/utils-0.1.7.tgz#64fa1a4cc2be305d5a1c3f081a148d6225388e9e"
-  integrity sha512-SUcIMmlPs7xtmzrFNJDvefYQLg4cJm4EGZPClw4X86c6JsMuB0VMWEkjrnzfEqc6rdnfBMUN4l7Hyb4noNOJvg==
+"@workhard/utils@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@workhard/utils/-/utils-0.1.8.tgz#9e2a7c0d7cfc1c7df157fa20afd77af208a6016c"
+  integrity sha512-EDRa0XeEk5/S/C/oMUgey83H/9ArnaFEk5HMHGuWgWrrbeU7a5S59ZZYH7RD/xer7TmhGvGiPUczm8nxkww0xw==
   dependencies:
     "@openzeppelin/contracts" "^4.2.0"
     "@workhard/protocol" "^1.0.3"
