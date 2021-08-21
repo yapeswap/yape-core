@@ -3,6 +3,9 @@ on:
   release:
     types: [created]
 
+env:
+  FORK_URL: ${{ secrets.FORK_URL }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
