@@ -882,6 +882,16 @@
   resolved "https://registry.yarnpkg.com/@uniswap/v2-core/-/v2-core-1.0.1.tgz#af8f508bf183204779938969e2e54043e147d425"
   integrity sha512-MtybtkUPSyysqLY2U210NBDeCHX+ltHt3oADGdjqoThZaFRDKwM6k1Nb3F0A3hk5hwuQvytFWhrWHOEq6nVJ8Q==
 
+"@workhard/protocol@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@workhard/protocol/-/protocol-1.0.4.tgz#6cc44b3bde3dfd865c8930aaf40568821e7901d2"
+  integrity sha512-RwL9qjzQ2H2QqqWAUCvc4AH01jIqrH9PKYlD4LL+7sqHRXNgUCCOKo8oAYgarjfN8R8SaJI0F76jWE0VQ7oXBw==
+  dependencies:
+    "@openzeppelin/contracts" "3.4.0-solc-0.7 "
+    "@uniswap/v2-core" "^1.0.1"
+    dotenv "^8.2.0"
+    lowdb "^1.0.0"
+
 "@workhard/protocol@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@workhard/protocol/-/protocol-1.0.3.tgz#9dcccb713590e360400b68f82cc7c70915380b2f"
@@ -892,10 +902,10 @@
     dotenv "^8.2.0"
     lowdb "^1.0.0"
 
-"@workhard/utils@^0.1.5":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@workhard/utils/-/utils-0.1.6.tgz#2d6e516898f5fcdb95f850bbccd35511f7f7ad8b"
-  integrity sha512-alq4wm1vAetiSup1SwwevO8DdTuxpvoOQT45ZbBoOcrfnrArhq0ucgTnSGrBUVQYiP2Qalm+De6ODiUI1pgwjQ==
+"@workhard/utils@0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@workhard/utils/-/utils-0.1.7.tgz#64fa1a4cc2be305d5a1c3f081a148d6225388e9e"
+  integrity sha512-SUcIMmlPs7xtmzrFNJDvefYQLg4cJm4EGZPClw4X86c6JsMuB0VMWEkjrnzfEqc6rdnfBMUN4l7Hyb4noNOJvg==
   dependencies:
     "@openzeppelin/contracts" "^4.2.0"
     "@workhard/protocol" "^1.0.3"
