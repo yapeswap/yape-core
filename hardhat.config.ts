@@ -71,4 +71,7 @@ export default {
   dependencyCompiler: {
     paths: ['@workhard/utils/contracts/fee/FeeManager.sol'],
   },
+  mocha: {
+    timeout: 300000
+  }
 }
