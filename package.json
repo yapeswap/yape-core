@@ -1,7 +1,7 @@
 {
   "name": "@yapeswap/yape-core",
   "description": "Core contracts for Yapeswap protocol.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://yapeswap.org",
   "repository": {
     "type": "git",
